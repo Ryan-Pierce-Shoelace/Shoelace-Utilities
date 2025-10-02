@@ -1,0 +1,21 @@
+{
+  "name": "com.shoelace.utilities",
+  "version": "1.0.0",
+  "displayName": "Shoelace Dev Utilities",
+  "description": "A collection of third party and in-house scripts and extensions that improve the development process for the Shoelace Dev team",
+  "unity": "2021.3",
+  "author": {
+    "name": "Shoelace Dev Team"
+  },
+  "contributors": [
+    {
+      "name": "Ryan Pierce"
+    },
+    {
+      "name": "Travis Pierce"
+    },
+    {
+      "name": "Trisibo"
+    }
+  ]
+}
