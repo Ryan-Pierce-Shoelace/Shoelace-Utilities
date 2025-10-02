@@ -1,8 +1,9 @@
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+#if UNITY_EDITOR
+using UnityEditor;
 namespace Shoelace.Utilities
 {
 	public static class SceneAssetHelper
@@ -18,8 +19,7 @@ namespace Shoelace.Utilities
 		public static T GetOrCreateAsset<T>(string name) where T : ScriptableObject
 		{
 			string folder = GetSceneFolder();
-			if (!AssetDatabase.IsValidFolder(folder))
-				AssetDatabase.CreateFolder(SceneDataFolder.TrimEnd('/'), SceneManager.GetActiveScene().name);
+			EnsureFolderExists(folder);
 
 			string path = Path.Combine(folder, name + ".asset");
 			T asset = AssetDatabase.LoadAssetAtPath<T>(path);
@@ -33,6 +33,19 @@ namespace Shoelace.Utilities
 			}
 			return asset;
 		}
-	}
+		
+		private static void EnsureFolderExists(string folderPath)
+		{
+			folderPath = folderPath.Replace("\\", "/"); // normalize for Unity
+			if (AssetDatabase.IsValidFolder(folderPath)) return;
 
+			string parent = Path.GetDirectoryName(folderPath).Replace("\\", "/");
+			if (!AssetDatabase.IsValidFolder(parent))
+				EnsureFolderExists(parent);
+
+			string newFolderName = Path.GetFileName(folderPath);
+			AssetDatabase.CreateFolder(parent, newFolderName);
+		}
+	}
 }
+#endif
