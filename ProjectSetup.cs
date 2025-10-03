@@ -23,11 +23,11 @@ public static class ProjectSetup
         {
             "git+https://github.com/adammyhre/Unity-Utils.git",
             "git+https://github.com/adammyhre/Unity-Improved-Timers.git",
-            "git+https://github.com/Ryan-Pierce-Shoelace/Shoelace-SOAP-Variables.git",
-            "git+https://github.com/Ryan-Pierce-Shoelace/Shoelace-SOAP-Events.git",
-            "git+https://github.com/Ryan-Pierce-Shoelace/Shoelace-Audio-System.git",
-            "git+https://github.com/Ryan-Pierce-Shoelace/Shoelace-Grid-System.git",
-            "git+https://github.com/Ryan-Pierce-Shoelace/Shoelace-Region-System.git"
+            "https://github.com/Ryan-Pierce-Shoelace/Shoelace-SOAP-Variables.git#main",
+            "https://github.com/Ryan-Pierce-Shoelace/Shoelace-SOAP-Events.git#main",
+            "https://github.com/Ryan-Pierce-Shoelace/Shoelace-Audio-System.git#main",
+            "https://github.com/Ryan-Pierce-Shoelace/Shoelace-Grid-System.git#main",
+            "https://github.com/Ryan-Pierce-Shoelace/Shoelace-Region-System.git#main"
         };
 
         Packages.InstallPackages(packages);
@@ -95,8 +95,8 @@ public static class ProjectSetup
 
             while (!request.IsCompleted)
             {
-                Debug.Log("Downloading - " + request.Result.packageId);
-                await Task.Delay(100);
+                Debug.Log("Downloading : " + packagesToInstall.Count +" packages remaining");
+                await Task.Delay(500);
             }
 
             if (request.Status == StatusCode.Success) Debug.Log("Installed : " + request.Result.packageId);
