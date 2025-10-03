@@ -103,7 +103,7 @@ public static class ProjectSetup
             else if (request.Status == StatusCode.Failure)
                 Debug.LogError("Failed to install : " + request.Result.packageId + " ||| " + request.Error.message);
 
-            if (packagesToInstall.Count == 0)
+            if (packagesToInstall.Count != 0)
             {
                 await Task.Delay(1000);
                 StartNextPackageInstallation();
