@@ -24,6 +24,11 @@ public static class ProjectSetup
             "com.unity.2d.animation",
             "git+https://github.com/adammyhre/Unity-Utils.git",
             "git+https://github.com/adammyhre/Unity-Improved-Timers.git",
+            "https://github.com/Ryan-Pierce-Shoelace/Shoelace-SOAP-Variables.git#main",
+            "https://github.com/Ryan-Pierce-Shoelace/Shoelace-SOAP-Events.git#main",
+            "https://github.com/Ryan-Pierce-Shoelace/Shoelace-Audio-System.git#main",
+            "https://github.com/Ryan-Pierce-Shoelace/Shoelace-Grid-System.git#main",
+            "https://github.com/Ryan-Pierce-Shoelace/Shoelace-Region-System.git#main",
 
             "com.unity.inputsystem" //new input system requires restart Import LAST (i dont think thats true any more but just in case)
         };
