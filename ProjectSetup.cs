@@ -136,7 +136,7 @@ public static class ProjectSetup
             string sourcePath = $"Assets/{folderName}";
             if (IsValidFolder(sourcePath))
             {
-                string destinationPath = $"Assts/{newParent}/{folderName}";
+                string destinationPath = $"Assets/{newParent}/{folderName}";
                 string error = MoveAsset(sourcePath, destinationPath);
 
                 if (!string.IsNullOrEmpty(error))
