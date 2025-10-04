@@ -21,7 +21,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace Trisibo
+namespace ShoelaceStudios.Utilities.Trisibo
 {
     [CustomPropertyDrawer(typeof(SceneField))]
     public class SceneFieldEditor : PropertyDrawer

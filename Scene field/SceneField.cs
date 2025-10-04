@@ -28,7 +28,7 @@ using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 #endif
 
-namespace Trisibo
+namespace ShoelaceStudios.Utilities.Trisibo
 {
     /// <summary>
     /// Makes it possible to assign a scene asset in the inspector and load the scene data in a build.
