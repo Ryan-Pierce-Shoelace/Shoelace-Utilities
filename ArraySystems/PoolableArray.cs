@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Shoelace.Utilities
+namespace ShoelaceStudios.Utilities
 {
     public static class PoolableArray<T>
     {

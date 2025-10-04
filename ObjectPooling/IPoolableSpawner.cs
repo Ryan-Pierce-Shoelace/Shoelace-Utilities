@@ -1,4 +1,4 @@
-namespace Shoelace
+namespace ShoelaceStudios
 {
     public interface IPoolableSpawner
     {

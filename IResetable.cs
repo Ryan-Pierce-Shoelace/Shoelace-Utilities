@@ -1,4 +1,4 @@
-﻿namespace Shoelace.Utilities
+﻿namespace ShoelaceStudios.Utilities
 {
     public interface IResetable
     {

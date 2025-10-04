@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
 using UnityEditor;
-namespace Shoelace.Utilities
+namespace ShoelaceStudios.Utilities
 {
 	public static class SceneAssetHelper
 	{

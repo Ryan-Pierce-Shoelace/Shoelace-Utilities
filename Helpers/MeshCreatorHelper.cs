@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Shoelace.Utilities
+namespace ShoelaceStudios.Utilities
 {
-    public static class MeshCreator
+    public static class MeshCreatorHelper
     {
         private static Mesh quadMesh;
 

@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Shoelace.Utilities
+namespace ShoelaceStudios.Utilities
 {
     public class RecyclingObjectPool<T> where T : class
     {

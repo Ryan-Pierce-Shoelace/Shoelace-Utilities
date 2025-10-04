@@ -1,6 +1,6 @@
 using System;
 
-namespace Shoelace.Utilities.Extensions
+namespace ShoelaceStudios.Utilities.Extensions
 {
 	public static class GuidExtensions
 	{

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Shoelace.Utilities
+namespace ShoelaceStudios.Utilities
 {
 	public class ArrayShuffler<T>
 	{

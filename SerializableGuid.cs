@@ -1,8 +1,8 @@
 using System;
-using Shoelace.Utilities.Extensions;
+using ShoelaceStudios.Utilities.Extensions;
 using UnityEngine;
 
-namespace Shoelace.Utilities
+namespace ShoelaceStudios.Utilities
 {
 	[Serializable]
 	public struct SerializableGuid : IEquatable<SerializableGuid>

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Shoelace.Utilities
+namespace ShoelaceStudios.Utilities
 {
     [CreateAssetMenu(fileName = "New Style Sheet Ref", menuName = "Text Core/StyleSheetRef")]
     public class StyleSheetRef : ScriptableObject
