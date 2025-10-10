@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ShoelaceStudios.Utilities
+namespace ShoelaceStudios.Utilities.ArraySystems
 {
     public class DataPool<T> where T : IResetable, new() // <- I didnt realize you could add this. This is nice.
     {

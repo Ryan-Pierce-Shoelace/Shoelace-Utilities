@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ShoelaceStudios.Utilities
+namespace ShoelaceStudios.Utilities.Helpers
 {
     public static class MeshCreatorHelper
     {

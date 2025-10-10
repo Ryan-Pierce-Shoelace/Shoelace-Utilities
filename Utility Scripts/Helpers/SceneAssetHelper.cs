@@ -1,10 +1,10 @@
+#if UNITY_EDITOR
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-#if UNITY_EDITOR
-using UnityEditor;
-namespace ShoelaceStudios.Utilities
+namespace ShoelaceStudios.Utilities.Helpers
 {
 	public static class SceneAssetHelper
 	{

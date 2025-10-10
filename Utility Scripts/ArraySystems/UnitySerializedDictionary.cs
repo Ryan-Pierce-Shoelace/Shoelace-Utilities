@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ShoelaceStudios.Utilities
+namespace ShoelaceStudios.Utilities.ArraySystems
 {
 	[Serializable]
 	public class UnitySerializedDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver

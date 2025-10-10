@@ -3,7 +3,7 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 
-namespace ShoelaceStudios.Utilities
+namespace ShoelaceStudios.Utilities.TextSystems
 {
     public class TMPStyleCreator : MonoBehaviour
     {
