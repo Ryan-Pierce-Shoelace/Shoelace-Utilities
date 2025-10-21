@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
+
 namespace ShoelaceStudios.Utilities
 {
     public static class BarHelper
@@ -34,9 +35,12 @@ namespace ShoelaceStudios.Utilities
                         fontSize = 12,
                     };
 
-                    GUI.Label(new Rect(x + 2, rect.y, width, rect.height),
-                        EntryHelper.GetPropertyValueString(valueProp), style);
+                    float percent = (weightProp.floatValue / total) * 100f;
+                    string labelText = $"{EntryHelper.GetPropertyValueString(valueProp)} ({percent:0.#}%)";
+
+                    GUI.Label(new Rect(x + 2, rect.y, width, rect.height), labelText, style);
                 }
+
                 x += width;
             }
         }
