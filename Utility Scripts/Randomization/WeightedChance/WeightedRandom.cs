@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-
 namespace ShoelaceStudios.Utilities
 {
     [Serializable]

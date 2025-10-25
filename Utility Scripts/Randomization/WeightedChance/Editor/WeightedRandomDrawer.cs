@@ -79,9 +79,9 @@ namespace ShoelaceStudios.Utilities
                 // Draw all entries
                 for (int i = 0; i < entriesProp.arraySize; i++)
                 {
-                    EntryHelper.DrawEntryRow(entriesProp.GetArrayElementAtIndex(i), position.x, y, FieldWidth,
+                    float bonusY = EntryHelper.DrawEntryRow(entriesProp.GetArrayElementAtIndex(i), position.x, y, FieldWidth,
                         RowHeight, Padding, i, entriesProp);
-                    y += RowHeight + Padding;
+                    y += RowHeight + Padding + bonusY;
                 }
 
                 // Draw Add + Normalize buttons
