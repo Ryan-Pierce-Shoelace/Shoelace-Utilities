@@ -19,13 +19,16 @@
 // THE SOFTWARE.
 
 using System;
+using UnityEngine;
 using System.Collections.Generic;
+
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
-using UnityEngine;
+#endif
 
-namespace ShoelaceStudios.Utilities.Scene_field
+namespace Trisibo
 {
     /// <summary>
     /// Makes it possible to assign a scene asset in the inspector and load the scene data in a build.
