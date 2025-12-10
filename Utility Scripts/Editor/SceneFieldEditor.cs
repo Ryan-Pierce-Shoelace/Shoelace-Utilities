@@ -18,11 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using ShoelaceStudios.Utilities.Scene_field;
 using UnityEngine;
 using UnityEditor;
 
-namespace ShoelaceStudios.Utilities.Trisibo
+namespace Trisibo
 {
     [CustomPropertyDrawer(typeof(SceneField))]
     public class SceneFieldEditor : PropertyDrawer
