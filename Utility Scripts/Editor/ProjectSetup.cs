@@ -134,7 +134,7 @@ namespace Utilities.Editor
 			}
 		}
 
-		static class Folders
+		public static class Folders
 		{
 			public static void Delete(string folderName)
 			{
