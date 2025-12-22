@@ -10,6 +10,12 @@ namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
         {
             this.method = method;
         }
+
+        public MethodBuilder Comment(string comment)
+        {
+            method.Comments = comment;
+            return this;
+        }
         public MethodBuilder Param(string type, string name)
         {
             method.Parameters.Add(new ParamSpec(type, name));

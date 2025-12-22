@@ -9,8 +9,8 @@ namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
         public Access Access = Access.Private;
         public string ReturnType;
         public string Signature;
+        public string Comments;
         public List<ParamSpec> Parameters = new();
-
         public List<string> BodyLines = new();
 
         public bool Validate()
@@ -28,7 +28,6 @@ namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
             
             return true;
         }
-
         public string GetDeclarationLine()
         {
             string parameters = "";
