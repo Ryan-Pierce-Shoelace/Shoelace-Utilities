@@ -1,3 +1,7 @@
+## \[1.4.1] - 2025-12-24
+
+### Added extra visual element extension methods
+
 ## \[1.4.0] - 2025-12-22
 
 ### Added New Script Builder System, enabling the creation of custom scripts through editor functions.

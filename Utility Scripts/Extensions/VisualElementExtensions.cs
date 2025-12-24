@@ -104,5 +104,31 @@ namespace ShoelaceStudios.Utilities.Extensions
 			Texture2D texture = sprite.texture;
 			if (texture) imageContainer.style.backgroundImage = new StyleBackground(texture);
 		}
+
+		public static T SetDisplayStyle<T>(this T element, DisplayStyle displayStyle) where T : VisualElement
+		{
+			if (element != null)
+				element.style.display = displayStyle;
+			return element;
+		}
+
+		public static T SetText<T>(this T element, string text) where T : TextElement
+		{
+			if (element != null)
+				element.text = text;
+			return element;
+		}
+
+		public static T OnClick<T>(this T button, System.Action callback) where T : Button
+		{
+			if (button != null && callback != null)
+				button.clicked += callback;
+			return button;
+		}
+
+		public static TData GetData<TData>(this VisualElement element) where TData : class
+		{
+			return element?.userData as TData;
+		}
 	}
 }
