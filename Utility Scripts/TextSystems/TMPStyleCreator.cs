@@ -5,95 +5,96 @@ using UnityEngine;
 
 namespace ShoelaceStudios.Utilities.TextSystems
 {
-    public class TMPStyleCreator : MonoBehaviour
-    {
-        [SerializeField] private TMP_Text targetText;
+	public class TMPStyleCreator : MonoBehaviour
+	{
+		[SerializeField] private TMP_Text targetText;
 
-        public string openingTags;
-        public string closingTags;
+		public string openingTags;
+		public string closingTags;
 
-        public enum TextWeight
-        { 
-            Regular,
-            Thin,
-            Black
-        }
-        public TextWeight weight;
+		public enum TextWeight
+		{
+			Regular,
+			Thin,
+			Black
+		}
 
-        //[Button("Generate Style Tags")]
-        public void ReadValuesFromTMP()
-        {
-            StringBuilder openSB = new StringBuilder();
-            StringBuilder closeSB = new StringBuilder();
+		public TextWeight weight;
 
-            if((targetText.fontStyle & FontStyles.Bold) != 0)
-            {
-                openSB.Append("<b>");
-                closeSB.Append("</b>");
-            }
+		//[Button("Generate Style Tags")]
+		public void ReadValuesFromTMP()
+		{
+			StringBuilder openSB = new();
+			StringBuilder closeSB = new();
 
-            if ((targetText.fontStyle & FontStyles.Italic) != 0)
-            {
-                openSB.Append("<i>");
-                closeSB.Append("</i>");
-            }
-            if ((targetText.fontStyle & FontStyles.UpperCase) != 0)
-            {
-                openSB.Append("<uppercase>");
-                closeSB.Append("</uppercase>");
-            }
-            if ((targetText.fontStyle & FontStyles.LowerCase) != 0)
-            {
-                openSB.Append("<lowercase>");
-                closeSB.Append("</lowercase>");
-            }
+			if ((targetText.fontStyle & FontStyles.Bold) != 0)
+			{
+				openSB.Append("<b>");
+				closeSB.Append("</b>");
+			}
 
-            string fontAsset = targetText.font.ToString();
+			if ((targetText.fontStyle & FontStyles.Italic) != 0)
+			{
+				openSB.Append("<i>");
+				closeSB.Append("</i>");
+			}
 
-            fontAsset = fontAsset.Replace(" (TMPro.TMP_FontAsset)", string.Empty);
+			if ((targetText.fontStyle & FontStyles.UpperCase) != 0)
+			{
+				openSB.Append("<uppercase>");
+				closeSB.Append("</uppercase>");
+			}
 
-            openSB.Append($"<font=\"{fontAsset}\">");
-            closeSB.Append("</font>");
+			if ((targetText.fontStyle & FontStyles.LowerCase) != 0)
+			{
+				openSB.Append("<lowercase>");
+				closeSB.Append("</lowercase>");
+			}
 
-            float textSize = targetText.fontSize;
-            openSB.Append($"<size={textSize}pt>");
-            closeSB.Append("</size>");
+			string fontAsset = targetText.font.ToString();
 
-            Color textColor = targetText.color;
-            string textColorRGB = ColorUtility.ToHtmlStringRGB(textColor);
-            openSB.Append($"<color=#{textColorRGB}>");
-            closeSB.Append($"</color>");
+			fontAsset = fontAsset.Replace(" (TMPro.TMP_FontAsset)", string.Empty);
 
-            float characterSpacing = targetText.characterSpacing;
-            characterSpacing /= 100;
-            string cSpacing = characterSpacing.ToString("N3", CultureInfo.InvariantCulture);
+			openSB.Append($"<font=\"{fontAsset}\">");
+			closeSB.Append("</font>");
 
-            if(characterSpacing != 0)
-            {
-                openSB.Append($"<cspace={cSpacing}em>");
-                closeSB.Append($"</cspace>");
-            }
+			float textSize = targetText.fontSize;
+			openSB.Append($"<size={textSize}pt>");
+			closeSB.Append("</size>");
 
-            float lineSpacing = targetText.lineSpacing;
-            lineSpacing /= 100;
-            string lSpacing = lineSpacing.ToString("N3", CultureInfo.InvariantCulture);
+			Color textColor = targetText.color;
+			string textColorRGB = ColorUtility.ToHtmlStringRGB(textColor);
+			openSB.Append($"<color=#{textColorRGB}>");
+			closeSB.Append($"</color>");
 
-            if (lineSpacing != 0)
-            {
-                openSB.Append($"<line-height={cSpacing}em>");
-                closeSB.Append($"</line-height>");
-            }
+			float characterSpacing = targetText.characterSpacing;
+			characterSpacing /= 100;
+			string cSpacing = characterSpacing.ToString("N3", CultureInfo.InvariantCulture);
 
-            if(weight == TextWeight.Black)
-            {
-                openSB.Append($"<font-weight={"900"}>");
-                closeSB.Append("</font-weight>");
-            }
+			if (characterSpacing != 0)
+			{
+				openSB.Append($"<cspace={cSpacing}em>");
+				closeSB.Append($"</cspace>");
+			}
 
-            openingTags = openSB.ToString();
-            closingTags = closeSB.ToString();
+			float lineSpacing = targetText.lineSpacing;
+			lineSpacing /= 100;
+			string lSpacing = lineSpacing.ToString("N3", CultureInfo.InvariantCulture);
 
-        }
+			if (lineSpacing != 0)
+			{
+				openSB.Append($"<line-height={cSpacing}em>");
+				closeSB.Append($"</line-height>");
+			}
 
-    }
+			if (weight == TextWeight.Black)
+			{
+				openSB.Append($"<font-weight={"900"}>");
+				closeSB.Append("</font-weight>");
+			}
+
+			openingTags = openSB.ToString();
+			closingTags = closeSB.ToString();
+		}
+	}
 }

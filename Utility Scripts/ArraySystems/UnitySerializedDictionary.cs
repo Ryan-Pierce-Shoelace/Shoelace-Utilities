@@ -7,29 +7,27 @@ namespace ShoelaceStudios.Utilities.ArraySystems
 	[Serializable]
 	public class UnitySerializedDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
 	{
-		[SerializeField, HideInInspector]
-		private List<TKey> keyData = new List<TKey>();
+		[SerializeField] [HideInInspector]
+		private List<TKey> keyData = new();
 
-		[SerializeField, HideInInspector]
-		private List<TValue> valueData = new List<TValue>();
+		[SerializeField] [HideInInspector]
+		private List<TValue> valueData = new();
 
 		void ISerializationCallbackReceiver.OnAfterDeserialize()
 		{
-			this.Clear();
-			for (int i = 0; i < this.keyData.Count && i < this.valueData.Count; i++)
-			{
-				this[this.keyData[i]] = this.valueData[i];
-			}
+			Clear();
+			for (int i = 0; i < keyData.Count && i < valueData.Count; i++) this[keyData[i]] = valueData[i];
 		}
+
 		void ISerializationCallbackReceiver.OnBeforeSerialize()
 		{
-			this.keyData.Clear();
-			this.valueData.Clear();
+			keyData.Clear();
+			valueData.Clear();
 
 			foreach (KeyValuePair<TKey, TValue> item in this)
 			{
-				this.keyData.Add(item.Key);
-				this.valueData.Add(item.Value);
+				keyData.Add(item.Key);
+				valueData.Add(item.Value);
 			}
 		}
 	}

@@ -31,9 +31,10 @@ namespace ShoelaceStudios.Utilities.Helpers
 				AssetDatabase.Refresh();
 				Debug.Log($"Created {typeof(T).Name} for scene at {path}");
 			}
+
 			return asset;
 		}
-		
+
 		private static void EnsureFolderExists(string folderPath)
 		{
 			folderPath = folderPath.Replace("\\", "/"); // normalize for Unity

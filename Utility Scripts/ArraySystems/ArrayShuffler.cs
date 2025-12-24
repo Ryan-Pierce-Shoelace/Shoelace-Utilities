@@ -21,7 +21,7 @@ namespace ShoelaceStudios.Utilities.ArraySystems
 				Shuffle();
 				currentIndex = 0;
 			}
-        
+
 			return items[currentIndex++];
 		}
 

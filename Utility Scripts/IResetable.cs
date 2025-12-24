@@ -1,7 +1,7 @@
 ﻿namespace ShoelaceStudios.Utilities
 {
-    public interface IResetable
-    {
-        public void Reset();
-    }
+	public interface IResetable
+	{
+		public void Reset();
+	}
 }

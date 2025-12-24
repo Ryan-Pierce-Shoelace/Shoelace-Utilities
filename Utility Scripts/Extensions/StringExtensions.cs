@@ -7,16 +7,28 @@ namespace ShoelaceStudios.Utilities.Extensions
 	public static class StringExtensions
 	{
 		/// <summary>Checks if a string is Null or white space</summary>
-		public static bool IsNullOrWhiteSpace(this string val) => string.IsNullOrWhiteSpace(val);
+		public static bool IsNullOrWhiteSpace(this string val)
+		{
+			return string.IsNullOrWhiteSpace(val);
+		}
 
 		/// <summary>Checks if a string is Null or empty</summary>
-		public static bool IsNullOrEmpty(this string value) => string.IsNullOrEmpty(value);
+		public static bool IsNullOrEmpty(this string value)
+		{
+			return string.IsNullOrEmpty(value);
+		}
 
 		/// <summary>Checks if a string contains null, empty or white space.</summary>
-		public static bool IsBlank(this string val) => val.IsNullOrWhiteSpace() || val.IsNullOrEmpty();
+		public static bool IsBlank(this string val)
+		{
+			return val.IsNullOrWhiteSpace() || val.IsNullOrEmpty();
+		}
 
 		/// <summary>Checks if a string is null and returns an empty string if it is.</summary>
-		public static string OrEmpty(this string val) => val ?? string.Empty;
+		public static string OrEmpty(this string val)
+		{
+			return val ?? string.Empty;
+		}
 
 		/// <summary>
 		/// Shortens a string to the specified maximum length. If the string's length
@@ -33,23 +45,14 @@ namespace ShoelaceStudios.Utilities.Extensions
 		/// <result>The sliced string.</result>
 		public static string Slice(this string val, int startIndex, int endIndex)
 		{
-			if (val.IsBlank())
-			{
-				throw new ArgumentNullException(nameof(val), "Value cannot be null or empty.");
-			}
+			if (val.IsBlank()) throw new ArgumentNullException(nameof(val), "Value cannot be null or empty.");
 
-			if (startIndex < 0 || startIndex > val.Length - 1)
-			{
-				throw new ArgumentOutOfRangeException(nameof(startIndex));
-			}
+			if (startIndex < 0 || startIndex > val.Length - 1) throw new ArgumentOutOfRangeException(nameof(startIndex));
 
 			// If the end index is negative, it will be counted from the end of the string.
 			endIndex = endIndex < 0 ? val.Length + endIndex : endIndex;
 
-			if (endIndex < 0 || endIndex < startIndex || endIndex > val.Length)
-			{
-				throw new ArgumentOutOfRangeException(nameof(endIndex));
-			}
+			if (endIndex < 0 || endIndex < startIndex || endIndex > val.Length) throw new ArgumentOutOfRangeException(nameof(endIndex));
 
 			return val.Substring(startIndex, endIndex - startIndex);
 		}
@@ -68,14 +71,13 @@ namespace ShoelaceStudios.Utilities.Extensions
 			if (string.IsNullOrEmpty(input))
 				return string.Empty;
 
-			List<char> filteredChars = new List<char>();
+			List<char> filteredChars = new();
 			int lastValidIndex = -1;
 
 			// Iterate over the input string, filtering and determining valid start/end indices
 			foreach (char character in input
-				         .Where(
-					         character => char
-						         .IsLetterOrDigit(character) || character == '_' || (allowPeriods && character == '.'))
+				         .Where(character => char
+					         .IsLetterOrDigit(character) || character == '_' || (allowPeriods && character == '.'))
 				         .Where(character => filteredChars.Count != 0 || (!char.IsDigit(character) && character != '.')))
 			{
 				filteredChars.Add(character);
@@ -83,10 +85,7 @@ namespace ShoelaceStudios.Utilities.Extensions
 			}
 
 			// Remove trailing periods
-			while (lastValidIndex >= 0 && filteredChars[lastValidIndex] == '.')
-			{
-				lastValidIndex--;
-			}
+			while (lastValidIndex >= 0 && filteredChars[lastValidIndex] == '.') lastValidIndex--;
 
 			// Return the filtered string
 			return lastValidIndex >= 0
@@ -95,23 +94,72 @@ namespace ShoelaceStudios.Utilities.Extensions
 		}
 
 		// Rich text formatting, for Unity UI elements that support rich text.
-		public static string RichColor(this string text, string color) => $"<color={color}>{text}</color>";
-		public static string RichSize(this string text, int size) => $"<size={size}>{text}</size>";
-		public static string RichBold(this string text) => $"<b>{text}</b>";
-		public static string RichItalic(this string text) => $"<i>{text}</i>";
-		public static string RichUnderline(this string text) => $"<u>{text}</u>";
-		public static string RichStrikethrough(this string text) => $"<s>{text}</s>";
-		public static string RichFont(this string text, string font) => $"<font={font}>{text}</font>";
-		public static string RichAlign(this string text, string align) => $"<align={align}>{text}</align>";
-		public static string RichGradient(this string text, string color1, string color2) => $"<gradient={color1},{color2}>{text}</gradient>";
-		public static string RichRotation(this string text, float angle) => $"<rotate={angle}>{text}</rotate>";
-		public static string RichSpace(this string text, float space) => $"<space={space}>{text}</space>";
+		public static string RichColor(this string text, string color)
+		{
+			return $"<color={color}>{text}</color>";
+		}
+
+		public static string RichSize(this string text, int size)
+		{
+			return $"<size={size}>{text}</size>";
+		}
+
+		public static string RichBold(this string text)
+		{
+			return $"<b>{text}</b>";
+		}
+
+		public static string RichItalic(this string text)
+		{
+			return $"<i>{text}</i>";
+		}
+
+		public static string RichUnderline(this string text)
+		{
+			return $"<u>{text}</u>";
+		}
+
+		public static string RichStrikethrough(this string text)
+		{
+			return $"<s>{text}</s>";
+		}
+
+		public static string RichFont(this string text, string font)
+		{
+			return $"<font={font}>{text}</font>";
+		}
+
+		public static string RichAlign(this string text, string align)
+		{
+			return $"<align={align}>{text}</align>";
+		}
+
+		public static string RichGradient(this string text, string color1, string color2)
+		{
+			return $"<gradient={color1},{color2}>{text}</gradient>";
+		}
+
+		public static string RichRotation(this string text, float angle)
+		{
+			return $"<rotate={angle}>{text}</rotate>";
+		}
+
+		public static string RichSpace(this string text, float space)
+		{
+			return $"<space={space}>{text}</space>";
+		}
 
 
 		//Handle Text Case with safety
-		public static string ToAllCaps(this string text) => text?.ToUpper() ?? string.Empty;
+		public static string ToAllCaps(this string text)
+		{
+			return text?.ToUpper() ?? string.Empty;
+		}
 
-		public static string ToAllLower(this string text) => text?.ToLower() ?? string.Empty;
+		public static string ToAllLower(this string text)
+		{
+			return text?.ToLower() ?? string.Empty;
+		}
 
 		public static string ToProperCase(this string text)
 		{
@@ -119,10 +167,8 @@ namespace ShoelaceStudios.Utilities.Extensions
 
 			string[] words = text.Split(' ');
 			for (int i = 0; i < words.Length; i++)
-			{
 				if (words[i].Length > 0)
 					words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1).ToLower();
-			}
 
 			return string.Join(" ", words);
 		}
@@ -132,10 +178,7 @@ namespace ShoelaceStudios.Utilities.Extensions
 			if (string.IsNullOrEmpty(text)) return text ?? string.Empty;
 
 			char[] chars = text.ToCharArray();
-			for (int i = 0; i < chars.Length; i++)
-			{
-				chars[i] = i % 2 == 0 ? char.ToLower(chars[i]) : char.ToUpper(chars[i]);
-			}
+			for (int i = 0; i < chars.Length; i++) chars[i] = i % 2 == 0 ? char.ToLower(chars[i]) : char.ToUpper(chars[i]);
 
 			return new string(chars);
 		}
