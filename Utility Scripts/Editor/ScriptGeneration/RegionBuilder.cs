@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
 {
     public class RegionBuilder
@@ -13,11 +15,14 @@ namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
             string type,
             string name,
             Access access = Access.Private,
+            string attribute = null,
             bool isReadonly = false,
-            string initializer = null)
+            string initializer = null
+            )
         {
             region.Fields.Add(new FieldSpec
             {
+                Attribute = attribute,
                 Type = type,
                 Name = name,
                 Access = access,
@@ -42,6 +47,17 @@ namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
                 SetterAccess = setterAccess
             });
 
+            return this;
+        }
+
+        public RegionBuilder Accessor(string type, string name, string target)
+        {
+            region.Accessors.Add(new AccessorSpec
+            {
+                Type = type,
+                Name = name,
+                Target = target
+            });
             return this;
         }
         
@@ -108,6 +124,17 @@ namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
 
             region.Methods.Add(method);
             return this;
+        }
+
+        public void Enum(string name, List<string> types, Access access = Access.Public)
+        {
+            region.Enums.Add(
+                new EnumSpec
+                {
+                    Access = access,
+                    Name = name,
+                    Types = types
+                });
         }
     }
 }

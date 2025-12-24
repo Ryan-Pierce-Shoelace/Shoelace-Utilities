@@ -10,6 +10,9 @@ namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
         public List<string> Usings = new List<string>();
         public List<string> Interfaces = new List<string>();
         public List<RegionSpec> Regions = new();
+
+        public bool IsAbstract;
+        public bool IsPartial;
         
 
         public void AddInterface(string iname)
