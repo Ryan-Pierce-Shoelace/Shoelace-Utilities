@@ -1,0 +1,22 @@
+{
+  "Metadata": {
+    "Version": "1.0.0",
+    "Date": "2000-28-12"
+  },
+  "Data": [
+    {
+      "Id": "greeting",
+      "Language": "en",
+      "Speaker": "Mayor",
+      "Text": "Welcome to our village, traveler!",
+      "Responses": ["Thank you", "Goodbye"]
+    },
+    {
+      "Id": "greeting",
+      "Language": "es",
+      "Speaker": "Mayor",
+      "Text": "Hola!",
+      "Responses": ["Gracias", "Adios"]
+    }
+  ]
+}
