@@ -1,10 +1,15 @@
-## \[1.4.1] - 2025-12-24
+## \[1.4.2] - 2025-12-24
 
 ### Added extra visual element extension methods
+
+## \[1.4.1] - 2026-01-06
+
+### Update Project Setup with updated Package addresses.
 
 ## \[1.4.0] - 2025-12-22
 
 ### Added New Script Builder System, enabling the creation of custom scripts through editor functions.
+
 
 
 ## \[1.3.2] - 2025-10-21
