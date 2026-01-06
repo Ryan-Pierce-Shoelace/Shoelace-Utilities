@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace ImprovedTimers
 {
-    public class AdjustableCountDownTimer : CountdownTimer
+    public class AdjustableCountdownTimer : CountdownTimer
     {
-        public AdjustableCountDownTimer(float value) : base(value)
+        public AdjustableCountdownTimer(float value) : base(value)
         {
             CurrentTickMultiplier = 1f;
         }
