@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
             spec.Attribute = attribute;
             return this;
         }
+
         public ScriptBuilder Class(string name, string baseClass = null)
         {
             spec.ClassName = name;
@@ -31,9 +33,21 @@ namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
             return this;
         }
 
+        public ScriptBuilder SetAbstract(bool isAbstract)
+        {
+            spec.IsAbstract = isAbstract;
+            return this;
+        }
+
+        public ScriptBuilder SetPartial(bool isPartial)
+        {
+            spec.IsPartial = isPartial;
+            return this;
+        }
+
         public ScriptBuilder Using(string usingName)
         {
-            spec.Usings.Add(usingName);
+            spec.AddUsing(usingName);
             return this;
         }
 
@@ -61,127 +75,170 @@ namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
             string savePath = Path.Combine(directoryPath, $"{script.ClassName}.cs");
 
             CodeWriter writer = new(savePath);
+
+            //Usings
+            foreach (string use in script.Usings)
+            {
+                writer.WriteLine($"using {use};");
+            }
+
             if (!string.IsNullOrEmpty(script.Namespace))
             {
-                //Usings
-                foreach (string use in script.Usings)
-                {
-                    writer.WriteLine($"using {use};");
-                }
                 //Namespace
                 writer.WriteLine($"namespace {script.Namespace}");
                 writer.WriteLine("{");
                 writer.Indent();
+            }
 
-                if (!string.IsNullOrEmpty(script.Attribute))
+            if (!string.IsNullOrEmpty(script.Attribute))
+            {
+                writer.WriteLine("[" + script.Attribute + "]");
+            }
+
+            List<string> declarationFront = new List<string>
+            {
+                "public"
+            };
+
+            if (script.IsPartial)
+            {
+                declarationFront.Add("partial");
+            }
+
+            if (script.IsAbstract)
+            {
+                declarationFront.Add("abstract");
+            }
+            
+            declarationFront.Add("class");
+            
+            string classFront = string.Join(" ", declarationFront);
+            
+            //Class Declaration
+            bool hasBaseClass = !string.IsNullOrEmpty(script.BaseClass);
+            bool hasInterfaces = script.Interfaces.Count > 0;
+            if (!hasBaseClass && !hasInterfaces)
+            {
+                writer.WriteLine($"{classFront} {script.ClassName}");
+            }
+            else
+            {
+                string interfaces = hasInterfaces ? string.Join(", ", script.Interfaces) : "";
+                if (hasBaseClass)
                 {
-                    writer.WriteLine("["+script.Attribute+"]");
-                }
-                
-                //Class Declaration
-                bool hasBaseClass = !string.IsNullOrEmpty(script.BaseClass);
-                bool hasInterfaces = script.Interfaces.Count > 0;
-                if (!hasBaseClass && !hasInterfaces)
-                {
-                    writer.WriteLine($"public class {script.ClassName}");
-                }
-                else
-                {
-                    string interfaces = hasInterfaces ? string.Join(", ", script.Interfaces) : "";
-                    if (hasBaseClass)
+                    if (hasInterfaces)
                     {
-                        if (hasInterfaces)
-                        {
-                            writer.WriteLine($"public class {script.ClassName} : {script.BaseClass}, {interfaces}");
-                        }
-                        else
-                        {
-                            writer.WriteLine($"public class {script.ClassName} : {script.BaseClass}");
-                        }
+                        writer.WriteLine($"{classFront} {script.ClassName} : {script.BaseClass}, {interfaces}");
                     }
                     else
                     {
-                        writer.WriteLine($"public class {script.ClassName} : {interfaces}");
+                        writer.WriteLine($"{classFront} {script.ClassName} : {script.BaseClass}");
+                    }
+                }
+                else
+                {
+                    writer.WriteLine($"{classFront} {script.ClassName} : {interfaces}");
+                }
+            }
+
+            writer.WriteLine("{");
+            writer.Indent();
+
+            //Regions
+            foreach (RegionSpec region in script.Regions)
+            {
+                writer.WriteLine($"#region {region.Name}");
+                writer.Indent();
+
+                if (region.Fields.Count > 0)
+                {
+                    if (region.Fields.Count > 1)
+                        writer.WriteLine("// Fields");
+                    foreach (FieldSpec field in region.Fields)
+                    {
+                        writer.WriteLine(field.GetCodeString());
                     }
                 }
 
-                writer.WriteLine("{");
-                writer.Indent();
-
-                //Regions
-                foreach (RegionSpec region in script.Regions)
+                if (region.Enums.Count > 0)
                 {
-                    writer.WriteLine($"#region {region.Name}");
-                    writer.Indent();
-
-                    if (region.Fields.Count > 0)
+                    if (region.Enums.Count > 1)
+                        writer.WriteLine("// Enums");
+                    foreach (EnumSpec enumSpec in region.Enums)
                     {
-                        if(region.Fields.Count > 1)
-                            writer.WriteLine("// Fields");
-                        foreach (FieldSpec field in region.Fields)
-                        {
-                            writer.WriteLine(field.GetCodeString());
-                        } 
+                        writer.WriteLine(enumSpec.GetCodeString());
+                    }
+                }
+
+                if (region.Properties.Count > 0 || region.Accessors.Count > 0)
+                {
+                    if (region.Properties.Count > 1 || region.Accessors.Count > 1)
+                        writer.WriteLine("// Properties");
+                    foreach (PropertySpec property in region.Properties)
+                    {
+                        writer.WriteLine(property.GetCodeString());
                     }
 
-
-                    if (region.Properties.Count > 0)
+                    foreach (AccessorSpec accessor in region.Accessors)
                     {
-                        if(region.Properties.Count > 1)
-                            writer.WriteLine("// Properties");
-                        foreach (PropertySpec property in region.Properties)
-                        {
-                            writer.WriteLine(property.GetCodeString());
-                        }
+                        writer.WriteLine(accessor.GetCodeString());
                     }
+                }
 
 
-                    if (region.Events.Count > 0)
+                if (region.Events.Count > 0)
+                {
+                    if (region.Events.Count > 1)
+                        writer.WriteLine("// Events");
+                    foreach (EventSpec rEvent in region.Events)
                     {
-                        if(region.Events.Count > 1)
-                            writer.WriteLine("// Events");
-                        foreach (EventSpec rEvent in region.Events)
-                        {
-                            writer.WriteLine(rEvent.GetCodeString());
-                        }
+                        writer.WriteLine(rEvent.GetCodeString());
                     }
+                }
 
 
-                    if (region.Methods.Count > 0)
+                if (region.Methods.Count > 0)
+                {
+                    if (region.Methods.Count > 1)
+                        writer.WriteLine("// Methods");
+                    foreach (MethodSpec method in region.Methods)
                     {
-                        if(region.Methods.Count > 1)
-                            writer.WriteLine("// Methods");
-                        foreach (MethodSpec method in region.Methods)
+                        if (!string.IsNullOrEmpty(method.Comments))
                         {
-                            writer.WriteLine();
                             writer.WriteLine("/// " + method.Comments);
-                            writer.WriteLine(method.GetDeclarationLine());
-                            writer.WriteLine("{");
-                            writer.Indent();
-                            foreach (string line in method.BodyLines)
-                            {
-                                writer.WriteLine(line);
-                            }
-
-                            writer.Unindent();
-                            writer.WriteLine("}");
                         }
+
+                        writer.WriteLine(method.GetDeclarationLine());
+                        writer.WriteLine("{");
+                        writer.Indent();
+                        foreach (string line in method.BodyLines)
+                        {
+                            writer.WriteLine(line);
+                        }
+
+                        writer.Unindent();
+                        writer.WriteLine("}");
                     }
-                    
-                    writer.Unindent();
-                    writer.WriteLine("#endregion");
                 }
 
                 writer.Unindent();
-                writer.WriteLine("}");
+                writer.WriteLine("#endregion");
+            }
+            
+            writer.WriteLine("}");
+            writer.Unindent();
+
+            if (!string.IsNullOrEmpty(script.Namespace))
+            {
                 writer.Unindent();
                 writer.WriteLine("}");
             }
-            writer.Dispose();
             
-            #if UNITY_EDITOR
-                UnityEditor.AssetDatabase.Refresh();
-            #endif
+            writer.Dispose();
+
+#if UNITY_EDITOR
+            UnityEditor.AssetDatabase.Refresh();
+#endif
         }
 
         private static void Validate(ProceduralScriptSpec spec)
@@ -194,12 +251,9 @@ namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
                 if (string.IsNullOrEmpty(region.Name))
                     throw new System.InvalidOperationException("Region name is required");
 
-                if (!region.Validate())
-                    throw new System.InvalidOperationException("Region Specs invalid");
+                if (!region.Validate(out string error))
+                    throw new System.InvalidOperationException("Region Specs invalid :: " + error);
             }
         }
-
-
-        
     }
 }

@@ -7,10 +7,10 @@ namespace ShoelaceStudios.Utilities
 	[Serializable]
 	public struct SerializableGuid : IEquatable<SerializableGuid>
 	{
-		[SerializeField, HideInInspector] public uint Part1;
-		[SerializeField, HideInInspector] public uint Part2;
-		[SerializeField, HideInInspector] public uint Part3;
-		[SerializeField, HideInInspector] public uint Part4;
+		[SerializeField] [HideInInspector] public uint Part1;
+		[SerializeField] [HideInInspector] public uint Part2;
+		[SerializeField] [HideInInspector] public uint Part3;
+		[SerializeField] [HideInInspector] public uint Part4;
 
 		public static SerializableGuid Empty => new(0, 0, 0, 0);
 
@@ -31,14 +31,14 @@ namespace ShoelaceStudios.Utilities
 			Part4 = BitConverter.ToUInt32(bytes, 12);
 		}
 
-		public static SerializableGuid NewGuid() => Guid.NewGuid().ToSerializableGuid();
+		public static SerializableGuid NewGuid()
+		{
+			return Guid.NewGuid().ToSerializableGuid();
+		}
 
 		public static SerializableGuid FromHexString(string hexString)
 		{
-			if (hexString.Length != 32)
-			{
-				return Empty;
-			}
+			if (hexString.Length != 32) return Empty;
 
 			return new SerializableGuid
 			(
@@ -64,12 +64,19 @@ namespace ShoelaceStudios.Utilities
 			return new Guid(bytes);
 		}
 
-		public static implicit operator Guid(SerializableGuid serializableGuid) => serializableGuid.ToGuid();
-		public static implicit operator SerializableGuid(Guid guid) => new SerializableGuid(guid);
+		public static implicit operator Guid(SerializableGuid serializableGuid)
+		{
+			return serializableGuid.ToGuid();
+		}
+
+		public static implicit operator SerializableGuid(Guid guid)
+		{
+			return new SerializableGuid(guid);
+		}
 
 		public override bool Equals(object obj)
 		{
-			return obj is SerializableGuid guid && this.Equals(guid);
+			return obj is SerializableGuid guid && Equals(guid);
 		}
 
 		public bool Equals(SerializableGuid other)
@@ -82,7 +89,14 @@ namespace ShoelaceStudios.Utilities
 			return HashCode.Combine(Part1, Part2, Part3, Part4);
 		}
 
-		public static bool operator ==(SerializableGuid left, SerializableGuid right) => left.Equals(right);
-		public static bool operator !=(SerializableGuid left, SerializableGuid right) => !(left == right);
+		public static bool operator ==(SerializableGuid left, SerializableGuid right)
+		{
+			return left.Equals(right);
+		}
+
+		public static bool operator !=(SerializableGuid left, SerializableGuid right)
+		{
+			return !(left == right);
+		}
 	}
 }

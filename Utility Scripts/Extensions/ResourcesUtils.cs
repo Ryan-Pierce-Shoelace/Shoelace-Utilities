@@ -2,9 +2,11 @@
 using UnityEngine.Rendering;
 #endif
 
-namespace ShoelaceStudios.Utilities.Extensions {
-    public static class ResourcesUtils {
-#if ENABLED_UNITY_URP
+namespace ShoelaceStudios.Utilities.Extensions
+{
+	public static class ResourcesUtils
+	{
+		#if ENABLED_UNITY_URP
         /// <summary>
         /// Load volume profile from given path.
         /// </summary>
@@ -13,6 +15,6 @@ namespace ShoelaceStudios.Utilities.Extensions {
             var profile = Resources.Load<VolumeProfile>(path);
             volume.profile = profile;
         }
-#endif
-    }
+		#endif
+	}
 }

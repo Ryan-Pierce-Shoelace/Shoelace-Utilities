@@ -64,41 +64,60 @@ namespace ShoelaceStudios.Utilities.Editor.ScriptGeneration
         }
         public MethodBuilder Switch(string expression, System.Action<SwitchBuilder> body, string comment = "")
         {
-            var switchBuilder = new SwitchBuilder(this, expression);
-            body.Invoke(switchBuilder);
+            if (!string.IsNullOrEmpty(comment))
+                method.BodyLines.Add($"// {comment}");
+
+            method.BodyLines.Add($"switch ({expression})");
+            method.BodyLines.Add("{");
+
+            var switchBuilder = new SwitchBuilder(this);
+            body?.Invoke(switchBuilder);
+
+            method.BodyLines.Add("}");
             return this;
         }
         
         public class SwitchBuilder
         {
-            private MethodBuilder method;
-            private string switchExpression;
+            private readonly MethodBuilder method;
 
-            public SwitchBuilder(MethodBuilder method, string expression)
+            internal SwitchBuilder(MethodBuilder method)
             {
                 this.method = method;
-                this.switchExpression = expression;
-                method.Line($"switch ({switchExpression})");
-                method.Line("{");
             }
 
-            public SwitchBuilder Case(string value, System.Action<MethodBuilder> body, string comment = "")
+            public SwitchBuilder Case(
+                string value,
+                System.Action<MethodBuilder> body,
+                string comment = "",
+                string terminator = null)
             {
-                method.Line($"case {value}: {(string.IsNullOrEmpty(comment) ? "" : "// " + comment)}");
-                method.Line("{");
+                if (!string.IsNullOrEmpty(comment))
+                    method.Line($"    // {comment}");
+
+                method.Line($"    case {value}:");
+
                 body?.Invoke(method);
-                method.Line("    break;");
-                method.Line("}");
+
+                method.Line($"        {terminator ?? "break;"}");
+
                 return this;
             }
 
-            public SwitchBuilder Default(System.Action<MethodBuilder> body, string comment = "")
+            public SwitchBuilder Default(
+                System.Action<MethodBuilder> body,
+                string comment = "",
+                string terminator = null)
             {
-                method.Line($"default: {(string.IsNullOrEmpty(comment) ? "" : "// " + comment)}");
-                method.Line("{");
+                if (!string.IsNullOrEmpty(comment))
+                    method.Line($"    // {comment}");
+
+                method.Line("    default:");
+
                 body?.Invoke(method);
-                method.Line("    break;");
-                method.Line("}");
+
+                method.Line($"        {terminator ?? "break;"}");
+
                 return this;
             }
         }
