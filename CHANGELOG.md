@@ -1,3 +1,7 @@
+## \[1.6.1] - 2026-02-06
+
+### Added Serialization to interfaces
+
 ## \[1.4.2] - 2025-12-24
 
 ### Added extra visual element extension methods
